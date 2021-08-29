@@ -16,36 +16,36 @@ import {
     objectEntries
 } from './util.ts'
 
-export function rule<T>(validate: Validate<T>): Rule<T> {
+export function newRule<T>(validate: Validate<T>): Rule<T> {
     return {
         validate: validate
     }
 }
 
-export const ruleString = rule(
+export const rule_String = newRule(
     data => typeof(data) === 'string' ? reportOk(data) : reportNg() // Data is not string.
 )
-export const ruleNumber = rule(
+export const rule_Number = newRule(
     data => typeof(data) === 'number' ? reportOk(data) : reportNg() // Data is not number.
 )
-export const ruleBoolean = rule(
+export const rule_Boolean = newRule(
     data => typeof(data) === 'boolean' ? reportOk(data) : reportNg() // Data is not boolean.
 )
-export const ruleBigint = rule(
+export const rule_Bigint = newRule(
     data => typeof(data) === 'bigint' ? reportOk(data) : reportNg() // Data is not bigint.
 )
-export const ruleSymbol = rule(
+export const rule_Symbol = newRule(
     data => typeof(data) === 'symbol' ? reportOk(data) : reportNg() // Data is not symbol.
 )
-export const ruleUndefined = rule(
+export const rule_Undefined = newRule(
     data => typeof(data) === 'undefined' ? reportOk(data) : reportNg() // Data is not undefined.
 )
-export const ruleNull = rule(
+export const rule_Null = newRule(
     data => data == null ? reportOk(data as null) : reportNg() // Data is not null.
 )
 
-export function ruleStringLiteral<T extends string>(value: T) {
-    return rule(
+export function newRule_StrLit<T extends string>(value: T) {
+    return newRule(
         data => {
             if (typeof(data) !== 'string') {
                 return reportNg() // Data is not string.
@@ -57,8 +57,8 @@ export function ruleStringLiteral<T extends string>(value: T) {
         }
     )
 }
-export function ruleNumberLiteral<T extends number>(value: T) {
-    return rule(
+export function newRule_NumLit<T extends number>(value: T) {
+    return newRule(
         data => {
             if (typeof(data) !== 'number') {
                 return reportNg() // Data is not number.
@@ -70,8 +70,8 @@ export function ruleNumberLiteral<T extends number>(value: T) {
         }
     )
 }
-function ruleBooleanLiteral<T extends boolean>(value: T) {
-    return rule(
+function newRule_BoolLit<T extends boolean>(value: T) {
+    return newRule(
         data => {
             if (typeof(data) !== 'boolean') {
                 return reportNg() // Data is not boolean.
@@ -83,11 +83,11 @@ function ruleBooleanLiteral<T extends boolean>(value: T) {
         }
     )
 }
-export const ruleBooleanTrue = ruleBooleanLiteral(true)
-export const ruleBooleanFalse = ruleBooleanLiteral(false)
+export const rule_BoolTrue = newRule_BoolLit(true)
+export const rule_BoolFalse = newRule_BoolLit(false)
 
-export function ruleArray<E, T extends E[]>(elementRule: Rule<E>) {
-    return rule(
+export function newRule_Array<E, T extends E[]>(elementRule: Rule<E>) {
+    return newRule(
         data => {
             if (!Array.isArray(data)) {
                 return reportNg() // Data is not array.
@@ -102,8 +102,8 @@ export function ruleArray<E, T extends E[]>(elementRule: Rule<E>) {
         }
     )
 }
-export function ruleDictionary<E, T extends Dictionary<E>>(elementRule: Rule<E>) {
-    return rule(
+export function newRule_Dictionary<E, T extends Dictionary<E>>(elementRule: Rule<E>) {
+    return newRule(
         data => {
             if (typeof(data) !== 'object' || data == null) {
                 return reportNg() // Data is not object.
@@ -118,8 +118,8 @@ export function ruleDictionary<E, T extends Dictionary<E>>(elementRule: Rule<E>)
         }
     )
 }
-export function ruleTuple<T extends any[]>(...elementRules: RuleMap<T>) {
-    return rule(
+export function newRule_Tuple<T extends any[]>(...elementRules: RuleMap<T>) {
+    return newRule(
         data => {
             if (!Array.isArray(data)) {
                 return reportNg() // Data is not array.
@@ -139,10 +139,10 @@ export function ruleTuple<T extends any[]>(...elementRules: RuleMap<T>) {
         }
     )
 }
-export function ruleObjectLiteral<OBJ,
+export function newRule_ObjLit<OBJ,
 T extends OPT extends (keyof OBJ)[] ? Optionally<OBJ, OPT[number]> : OBJ,
 OPT extends (keyof OBJ)[] | undefined = undefined>(ruleMap: RuleMap<OBJ>, optionalKeys?: OPT) {
-    return rule(
+    return newRule(
         data => {
             if (typeof(data) !== 'object' || data == null) {
                 return reportNg() // Data is not object.
@@ -177,8 +177,8 @@ OPT extends (keyof OBJ)[] | undefined = undefined>(ruleMap: RuleMap<OBJ>, option
     )
 }
 
-export function ruleUnion<CASES extends any[], T extends CASES[number]>(...caseRules: RuleMap<CASES>) {
-    return rule(
+export function newRule_Union<CASES extends any[], T extends CASES[number]>(...caseRules: RuleMap<CASES>) {
+    return newRule(
         data => {
             for (const caseRule of caseRules) {
                 const caseReport = caseRule.validate(data)
@@ -192,9 +192,9 @@ export function ruleUnion<CASES extends any[], T extends CASES[number]>(...caseR
 }
 
 // Expected to be used for recursive data etc.
-export function ruleLazyEvaluation<T>(callback: () => Rule<T>) {
+export function newRule_LazyEval<T>(callback: () => Rule<T>) {
     let cache: Rule<T> | null = null
-    return rule(
+    return newRule(
         data => {
             if (cache == null) {
                 cache = callback()
