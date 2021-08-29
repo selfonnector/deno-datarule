@@ -17,8 +17,8 @@ export {
     newRule_ObjLit,
     newRule_Union,
     newRule_LazyEval,
-    reportOk,
-    reportNg,
-    isReportOk,
-    isReportNg,
+    newReport_Ok,
+    newReport_Ng,
+    isOk_Report,
+    isNg_Report,
 } from './src/std.ts'

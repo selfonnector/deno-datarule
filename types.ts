@@ -2,7 +2,7 @@ export type {
     Rule,
     Validate,
     Report,
-    ReportOk,
-    ReportNg,
+    Report_Ok,
+    Report_Ng,
     Type
 } from './src/core.ts'
