@@ -1,8 +1,12 @@
 export interface Rule<T> {
-    readonly validate: Validate<T>
+    readonly meet: Meet<T>
+    readonly pass: Pass<T>
+    readonly check: Check<T>
 }
 
-export type Validate<T> = (data: any) => Report<T>
+export type Meet<T> = (data: any) => data is T
+export type Pass<T> = (data: any) => T
+export type Check<T> = (data: any) => Report<T>
 
 export type Report<T> = Report_Ok<T> | Report_Ng
 export interface Report_Ok<T> {

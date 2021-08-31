@@ -1,5 +1,9 @@
 export {
     mkRule,
+    mkValiRet_Ok,
+    mkValiRet_Ng,
+    isOk_Report,
+    isNg_Report,
     rule_String,
     rule_Number,
     rule_Boolean,
@@ -16,9 +20,5 @@ export {
     mkRule_Tuple,
     mkRule_ObjLit,
     mkRule_Union,
-    mkRule_LazyEval,
-    mkReport_Ok,
-    mkReport_Ng,
-    isOk_Report,
-    isNg_Report,
+    mkRule_LazyEval
 } from './src/std.ts'
