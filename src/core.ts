@@ -1,17 +1,13 @@
 export interface Rule<T> {
-    readonly meet: Meet<T>
-    readonly pass: Pass<T>
-    readonly check: Check<T>
+    readonly validate: Validate<T>
 }
 
-export type Meet<T> = (data: any) => data is T
-export type Pass<T> = (data: any) => T
-export type Check<T> = (data: any) => Report<T>
+// For the type argument "_T", specify the type of "data" when returning "Report_Ok".
+export type Validate<_T> = (data: any) => Report
 
-export type Report<T> = Report_Ok<T> | Report_Ng
-export interface Report_Ok<T> {
+export type Report = Report_Ok | Report_Ng
+export interface Report_Ok {
     readonly kind: 'ok'
-    readonly data: T
 }
 export interface Report_Ng {
     readonly kind: 'ng'
