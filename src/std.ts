@@ -24,7 +24,7 @@ export function mkRule<T>(validate: Validate<T>): Rule<T> {
 
 export function mkReport_Ok(): Report_Ok {
     return {
-        kind: 'ok',
+        kind: 'ok'
     }
 }
 export function mkReport_Ng(): Report_Ng {
